@@ -11,6 +11,7 @@ import com.betrybe.agrix.ebytr.staff.service.exception.FarmNotFoundException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,6 +47,7 @@ public class FarmController {
   }
 
   @GetMapping
+  @Secured({"ROLE_ADMIN", "ROLE_MANAGER", "ROLE_USER"})
   public List<FarmDto> getAllFarms() {
     List<Farm> allFarms = farmService.findAll();
     return allFarms.stream().map(FarmDto::fromEntity).toList();
